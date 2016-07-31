@@ -41,7 +41,6 @@ def permute_word(random_word):
 
 
 def guess_word(word_to_guess):
-    print("word to guess is " + word_to_guess)
     # guess original word
     guessed_word = False
     while not guessed_word:
