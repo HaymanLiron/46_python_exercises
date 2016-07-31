@@ -1,9 +1,10 @@
 # kids game where you choose a category and go in a circle
 # and next word has to start with the last letter of the previous word
-# find the longest sequence using this list of words:
-import sys
-sys.setrecursionlimit(10000)
+# find the longest sequence using list of words provided
 
+
+import sys, threading
+sys.setrecursionlimit(10000)
 global_info = {"max length": 0}
 
 
