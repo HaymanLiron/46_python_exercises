@@ -6,7 +6,8 @@
 import sys, threading
 sys.setrecursionlimit(10000)
 global_info = {"max length": 0,
-               "word list": []}
+               "word list": [],
+               "used list": []}
 
 
 def word_works(a, b):
@@ -15,39 +16,39 @@ def word_works(a, b):
     return False
 
 
-def backtrack_solve(i, used_list):
+def backtrack_solve(i):
     # goal is defined as "to reach no more"
     # get word based on i
     word = global_info["word list"][i]
     # base case of if used list is empty
-    if not used_list:
-        used_list = [word]
-        return backtrack_solve(i+1, used_list)
+    if not global_info["used list"]:
+        global_info["used list"] = [word]
+        return backtrack_solve(i+1)
 
     # if word works:
-    if word not in used_list and word_works(used_list[-1], word):
+    if word not in global_info["used list"] and word_works(global_info["used list"][-1], word):
         # pop word to used_words list
-        used_list.append(word)
+        global_info["used list"].append(word)
         # call backtrack_solve
-        return backtrack_solve(0, used_list)
+        return backtrack_solve(0)
     # elif word does not work:
 
     else:
         # if this is the last word in the list of available words,
         if i == len(global_info["word list"]) - 2:
             # if length > max_length[0],
-            if len(used_list) > global_info["max length"]:
+            if len(global_info["used list"]) > global_info["max length"]:
                 # make that the new max_length
-                global_info["max length"] = len(used_list)
-                print(used_list)
+                global_info["max length"] = len(global_info["used list"])
+                print(global_info["used list"])
             # pop last word from the list of used words
-            popped = used_list.pop()
+            popped = global_info["used list"].pop()
             # call backtrack_solve
-            return backtrack_solve(global_info["word list"].index(popped) + 1, used_list)
+            return backtrack_solve(global_info["word list"].index(popped) + 1)
         # else move onto the next available word
         else:
             if i+1 < len(global_info["word list"]) - 1:
-                return backtrack_solve(i+1, used_list)
+                return backtrack_solve(i+1)
             return None
 
 
@@ -61,6 +62,6 @@ def run_backtrack():
                        "sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko " \
                        "tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask"
     global_info["word list"] = words_one_string.split(" ")
-    return backtrack_solve(0, [])
+    return backtrack_solve(0)
 
 run_backtrack()
